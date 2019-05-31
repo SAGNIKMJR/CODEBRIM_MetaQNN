@@ -254,7 +254,6 @@ class QLearner:
                                                           'hard_best_corrosion_stain'
                                                           ])
             self.replay_buffer = pd.read_csv(args.replay_buffer_csv_path, index_col=0)
-            print('here', self.replay_buffer.shape[0])
             if args.fixed_net_index_no > self.replay_buffer.shape[0] - 1:
                 raise ValueError('fixed net index not  within limits of replay buffer')
 
