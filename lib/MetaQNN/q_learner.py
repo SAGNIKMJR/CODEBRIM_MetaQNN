@@ -179,30 +179,30 @@ class QLearner:
         self.enum = se.StateEnumerator(args)
         self.state_string_utils = StateStringUtils()
         self.q_values_obj = QValues()
+        # epsilon -> epsilon value at which this architecture has been sampled
         # net -> network architecture
+        # train_flag -> flag that says if this network has been trained till convergence (full training)
         # spp_size -> number of SPP scales
         # reward -> reward from evaluating the network
         # hard_best_val -> best validation hard precision
         # hard_val_all_epochs -> list of hard validation precision from all epochs
         # soft_best_val -> best validation soft precision
         # soft_val_all_epochs -> list of soft validation precision from all  epochs
-        # epsilon -> epsilon value at which this architecture has been sampled
-        # train_flag -> flag that says if this network has been trained till convergence (full training)
         # hard_best_background -> best hard precision for 'background' class
         # hard_best_crack -> best hard precision for 'crack' class
         # hard_best_spallation -> best hard precision for 'spallation' class
         # hard_best_exposed_bars -> best hard precision for 'exposed bars' class
         # hard_best_efflorescence -> best hard precision for 'efflorescence' class
         # hard_best_corrosion_stain -> best hard precision for 'corrosion stain' class
-        self.replay_buffer = pd.DataFrame(columns=['net',
+        self.replay_buffer = pd.DataFrame(columns=['epsilon',
+                                                   'net',
+                                                   'train_flag',
                                                    'spp_size',
                                                    'reward',
                                                    'hard_best_val',
                                                    'hard_val_all_epochs',
                                                    'soft_best_val',
                                                    'soft_val_all_epochs',
-                                                   'epsilon',
-                                                   'train_flag',
                                                    'hard_best_background',
                                                    'hard_best_crack',
                                                    'hard_best_spallation',
@@ -325,30 +325,30 @@ class QLearner:
             hard_best_corrosion_stain = self.replay_buffer[self.replay_buffer['net']
                                                            == self.state_string]['hard_best_corrosion_stain'].values[0]
 
-        self.replay_buffer = self.replay_buffer.append(pd.DataFrame([[self.state_string,
+        self.replay_buffer = self.replay_buffer.append(pd.DataFrame([[self.epsilon,
+                                                                      self.state_string,
+                                                                      train_flag,
                                                                       spp_size,
                                                                       reward,
                                                                       hard_best_val,
                                                                       hard_val_all_epochs,
                                                                       soft_best_val,
                                                                       soft_val_all_epochs,
-                                                                      self.epsilon,
-                                                                      train_flag,
                                                                       hard_best_background,
                                                                       hard_best_crack,
                                                                       hard_best_spallation,
                                                                       hard_best_exposed_bars,
                                                                       hard_best_efflorescence,
                                                                       hard_best_corrosion_stain]],
-                                                                    columns=['net',
+                                                                    columns=['epsilon',
+                                                                             'net',
+                                                                             'train_flag',
                                                                              'spp_size',
                                                                              'reward',
                                                                              'hard_best_val',
                                                                              'hard_val_all_epochs',
                                                                              'soft_best_val',
                                                                              'soft_val_all_epochs',
-                                                                             'epsilon',
-                                                                             'train_flag',
                                                                              'hard_best_background',
                                                                              'hard_best_crack',
                                                                              'hard_best_spallation',
