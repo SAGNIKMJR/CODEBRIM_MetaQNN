@@ -98,15 +98,8 @@ class StateEnumerator:
         self.init_utility = args.early_stopping_thresh
 
     def enumerate_state(self, state, q_values):
-        # TODO: write state-transition rules
         """
         defines all state transitions, populates q_values where actions are valid
-        legal Transition:
-            start  ->  fc  (always, at least 1 fc layer)
-            fc  ->  fc  (always if state.layer_depth < args.min_fc
-                        optional if args.max_fc > state.layer_depth >= args.min_fc)
-            fc  ->  classifier  (always if state.layer_depth == args.max_fc;
-                                optional if args.max_fc > state.layer_depth >= args.min_fc)
         :param state: current state
         :param q_values: partially populated Q-value dictionary
         :return q_values: populated Q-value table with added entries of state action pairs
