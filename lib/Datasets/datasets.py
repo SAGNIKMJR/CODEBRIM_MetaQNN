@@ -12,13 +12,26 @@ import xml.etree.ElementTree as ElementTree
 
 
 class CODEBRIMSplit(datasets.ImageFolder):
-    # TODO: docstring
-    def __init__(self, root, xml_list, transform=None, target_transform=None, loader=datasets.folder.default_loader,
-                 fixed=False):
+    """
+    definition of class for reading data-split images and class labels, and iterating
+    over the datapoints
+
+    Parameters:
+        root (string): directory path for the data split
+        xml_list (list): list of paths to xmls for defect and background meta-data
+        transform (torchvision.transforms.Compose): transforms for the input data
+        target_transform (callable): transform for the targets
+        loader (callable): for loading an image given its path
+
+    Attributes:
+        file_list (dictionary): dictionary of file names (keys) and the corresponding
+                                class labels (values)
+        num_classes (int): number of classes in the dataset (6)
+    """
+    def __init__(self, root, xml_list, transform=None, target_transform=None, loader=datasets.folder.default_loader):
         super(CODEBRIMSplit, self).__init__(root, transform, target_transform, loader)
         self.file_list = {}
         self.num_classes = 6
-        self.require_fixed = fixed
         for file_name in xml_list:
             last_dot_idx = file_name.rfind('.')
             f_name_idx = file_name.rfind('/')
@@ -31,6 +44,11 @@ class CODEBRIMSplit(datasets.ImageFolder):
                 self.file_list[os.path.join(root_path, crop_name)] = target
 
     def __getitem__(self, idx):
+        """
+        defines the iterator for the dataset and returns datapoints in the form of tuples
+        :param idx: index to return the datapoint from
+        :return: a datapoint tuple (sample, target) for the index
+        """
         image_batch = super(CODEBRIMSplit, self).__getitem__(idx)[0]
         image_name = self.imgs[idx][0]
         f_name_idx = image_name.rfind('/')
@@ -44,6 +62,11 @@ class CODEBRIMSplit(datasets.ImageFolder):
         return [image_batch, self.file_list[name]]
 
     def compute_target_multi_target(self, defect):
+        """
+        enumerates the class-label by defining a float32 numpy array
+        :param defect: the class labels in the form of a string
+        :return: the enumerated version of the labels in the form of a numpy array 
+        """
         out = np.zeros(self.num_classes, dtype=np.float32)
         for i in range(self.num_classes):
             if defect[i].text == '1':
