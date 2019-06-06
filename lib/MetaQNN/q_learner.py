@@ -19,7 +19,7 @@ class QValues:
 
     Attributes:
         q_values (dict): a dictionary with start state as keys, and a list of actions and a list of corresponding
-        Q-values as the elements
+                         Q-values as the elements
     """
 
     def __init__(self):
@@ -161,12 +161,12 @@ class QLearner:
 
     Attributes:
         state_space_parameters (lib.Models.state_space_parameters): defines search rules like discrete search space,
-            epsilon schedule, replay number etc.
+                                                                    epsilon schedule, replay number etc.
         enum (lib.MetaQNN.state_enumerator.StateEnumerator): populates the discrete state-action space
         state_string_utils (lib.MetaQNN.state_string_utils.StateStringUtils): parses state list to state string and vice
-            versa
+                                                                              versa
         q_values_obj (QValues): defines a dictionary to hold the Q-values and methods to store it to and load it from
-            csv
+                                csv
         replay_buffer (pandas.DataFrame): replay buffer for Q-learning
         state (lib.MetaQNN.state_enumerator.State): starting state in net states
         state_list (list): list for storing sequence of states
@@ -527,7 +527,7 @@ class QLearner:
             val_acc_list (list): validation accuracy list of a net
         
         Returns:
-            reward, a floating point value
+            reward (float): reward to be used in the Bellman equation update
         """
         # average of last 5 validation accuracies
         reward = np.mean(val_acc_list[-5:]) / 100.
@@ -565,7 +565,7 @@ class QLearner:
         
         Parameters:
             state_list (list): list of states in a state sequence
-            reward (floating): reward to be used in the Bellman equation update
+            reward (float): reward to be used in the Bellman equation update
         """
         # updates the Q-value for the last state pair (update taking place in the reverse order)
         self._update_q_value(state_list[-2], state_list[-1], reward)

@@ -118,7 +118,7 @@ class CODEBRIM:
             patch_size (int): patch-size to rescale the images to
         
         Returns:
-            train_set (train split), val_set (validation split), test_set (test split)
+            train_set, val_set, test_set of type lib.Datasets.datasets.CODEBRIMSplit
         """
         train_set = CODEBRIMSplit(os.path.join(self.dataset_path, 'train'),
                                   self.dataset_xml_list,
@@ -148,7 +148,7 @@ class CODEBRIM:
             is_gpu (bool): True if CUDA is enabled so pin_memory is set to True
         
         Returns:
-            train_loader (train loader), val_loader (validation loader), test_loader (test loader)
+            train_loader, val_loader, test_loader of type torch.utils.data.DataLoader
         """
         train_loader = torch.utils.data.DataLoader(self.train_set, num_workers=workers, batch_size=batch_size,
                                                    shuffle=True, pin_memory=is_gpu)

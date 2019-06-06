@@ -213,13 +213,13 @@ class StateEnumerator:
 
     def _fc_sizes(self, state=None):
         """
-        return possible fc sizes given a state
+        get possible fc sizes given a state
         
         Parameters:
             state (lib.MetaQNN.state_enumerator.State): current state
         
         Returns:
-            a list of all possible fc sizes for the next state
+            fc_sizes (list): all possible fc sizes for the next state
         """
         # for fc layer, next fc layers have smaller fc_size
         if not isinstance(state, type(None)) and state.layer_type == 'fc':
@@ -231,13 +231,13 @@ class StateEnumerator:
 
     def _conv_sizes(self, image_size):
         """
-        return possible conv sizes given a state
+        get possible conv sizes given a state
         
         Parameters:
             image_size (int): current image size
         
         Returns:
-            a list of all possible conv square kernel sizes for the given image size
+            conv_sizes (list): all possible conv square kernel sizes for the given image size
         """
         conv_sizes = [conv_size for conv_size in state_space_parameters.conv_sizes if conv_size < image_size]
 
@@ -245,14 +245,14 @@ class StateEnumerator:
 
     def _calc_new_image_size(self, image_size, filter_size):
         """
-        return new image size
+        get new image size
 
         Parameters:
             image_size (int): current image size
             filter_size (int): conv square kernel size
 
         Returns:
-            new image size (int) after applying this conv filter
+            new_size (int): image size after applying this conv filter
         """
         if filter_size <= 5:
             new_size = int(math.floor((image_size - filter_size) / 1 + 1))

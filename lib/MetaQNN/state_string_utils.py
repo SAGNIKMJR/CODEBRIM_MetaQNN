@@ -46,7 +46,7 @@ class StateStringUtils:
             patch_size (int): patch size of image input to the network
         
         Returns:
-            list of states
+            states (list): list of states from parsed list
         """
 
         states = [se.State('start', 0, 0, 0, 0, patch_size, 0, 0)]
@@ -134,7 +134,7 @@ class StateStringUtils:
             filter_size (int): conv square kernel size
         
         Returns:
-            new image size after applying this conv filter
+            new_size (int): image size after applying this conv filter
         """
         if filter_size <= 5:
             new_size = int(math.floor((image_size - filter_size) / 1 + 1))
