@@ -1,4 +1,7 @@
 """
+Command line argument options parser.
+Adopted and modified from https://github.com/pytorch/examples/blob/master/imagenet/main.py
+
 Usage with two minuses "- -". Options are written with a minus "-" in command line, but
 appear with an underscore "_" in the attributes' list.
 

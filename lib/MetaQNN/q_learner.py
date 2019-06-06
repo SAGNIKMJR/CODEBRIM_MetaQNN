@@ -16,6 +16,7 @@ import lib.Models.state_space_parameters as state_space_parameters
 class QValues:
     """
     Q-value table for discrete state action space
+
     Attributes:
         q_values (dict): a dictionary with start state as keys, and a list of actions and a list of corresponding
         Q-values as the elements
@@ -27,7 +28,9 @@ class QValues:
     def save_to_csv(self, q_values_csv_path):
         """
         puts the Q-value table in a data frame and saves to a csv
-        :param q_values_csv_path: path to csv for saving the data frame
+        
+        Parameters:
+            q_values_csv_path (string): path to csv for saving the data frame
         """
 
         start_layer_type = []
@@ -95,7 +98,9 @@ class QValues:
     def load_q_values(self, q_values_csv_path):
         """
         reading a stored Q-value csv and making a Q-value dictionary
-        :param q_values_csv_path: path to csv for loading the Q-values from
+        
+        Parameters:
+            q_values_csv_path (string): path to csv for loading the Q-values from
         """
 
         self.q_values = {}
@@ -260,7 +265,9 @@ class QLearner:
     def generate_search_net_states(self, epsilon):
         """
         generates states for a search net
-        :param epsilon: epsilon value for sampling states in a state sequence for a search net
+        
+        Parameters:
+            epsilon (float): epsilon value for sampling states in a state sequence for a search net
         """
         self.epsilon = epsilon
         self._reset_for_new_walk()
@@ -270,7 +277,9 @@ class QLearner:
     def check_search_net_in_replay_buffer(self):
         """
         checks if search net is present in replay buffer
-        :return: boolean, True if search net present and False otherwise
+        
+        Returns:
+            boolean, True if search net present and False otherwise
         """
         if self.state_string in self.replay_buffer['net'].values:
             return True
@@ -284,21 +293,23 @@ class QLearner:
                                         hard_best_efflorescence=None, hard_best_corrosion_stain=None, verbose=True):
         """
         appends search net at the end of replay buffer
-        :param search_net_in_replay_buffer: True if search net is present in replay buffer and False otherwise
-        :param spp_size: number of spp scales in the net
-        :param reward: reward from the evaluating the search net
-        :param hard_best_val: best validation hard precision
-        :param hard_val_all_epochs: list of hard validation precision from all epochs
-        :param soft_best_val: best validation soft precision
-        :param soft_val_all_epochs: list of soft validation precision from all  epochs
-        :param train_flag: True if search net completely trained, False if early-stopped
-        :param hard_best_background: best hard precision for 'background' class
-        :param hard_best_crack: best hard precision for 'crack' class
-        :param hard_best_spallation: best hard precision for 'spallation' class
-        :param hard_best_exposed_bars: best hard precision for 'exposed bars' class
-        :param hard_best_efflorescence: best hard precision for 'efflorescence' class
-        :param hard_best_corrosion_stain: best hard precision for 'corrosion stain' class
-        :param verbose: True for printing search net performance measures to stdout
+        
+        Parameters:
+            search_net_in_replay_buffer (bool): True if search net is present in replay buffer and False otherwise
+            spp_size (int): number of spp scales in the net
+            reward (float): reward from the evaluating the search net
+            hard_best_val (float): best validation hard precision
+            hard_val_all_epochs (list): list of hard validation precision from all epochs
+            soft_best_val (float): best validation soft precision
+            soft_val_all_epochs (list): list of soft validation precision from all  epochs
+            train_flag (bool): True if search net completely trained, False if early-stopped
+            hard_best_background (float): best hard precision for 'background' class
+            hard_best_crack (float): best hard precision for 'crack' class
+            hard_best_spallation (float): best hard precision for 'spallation' class
+            hard_best_exposed_bars (float): best hard precision for 'exposed bars' class
+            hard_best_efflorescence (float): best hard precision for 'efflorescence' class
+            hard_best_corrosion_stain (float): best hard precision for 'corrosion stain' class
+            verbose (bool): True for printing search net performance measures to stdout
         """
         if search_net_in_replay_buffer:
             spp_size = self.replay_buffer[self.replay_buffer['net'] == self.state_string]['spp_size'].values[0]
@@ -395,18 +406,20 @@ class QLearner:
                                           hard_best_efflorescence=None, hard_best_corrosion_stain=None, verbose=True):
         """
         appends fixed net and its performance measures to the fixed net buffer
-        :param spp_size: number of spp scales in the net
-        :param hard_best_val: best validation hard precision
-        :param hard_val_all_epochs: list of hard validation precision from all epochs
-        :param soft_best_val: best validation soft precision
-        :param soft_val_all_epochs: list of soft validation precision from all  epochs
-        :param hard_best_background: best hard precision for 'background' class
-        :param hard_best_crack: best hard precision for 'crack' class
-        :param hard_best_spallation: best hard precision for 'spallation' class
-        :param hard_best_exposed_bars: best hard precision for 'exposed bars' class
-        :param hard_best_efflorescence: best hard precision for 'efflorescence' class
-        :param hard_best_corrosion_stain: best hard precision for 'corrosion stain' class
-        :param verbose: True for printing search net performance measures to stdout
+        
+        Parameters:
+            spp_size (int): number of spp scales in the net
+            hard_best_val (float): best validation hard precision
+            hard_val_all_epochs (list): list of hard validation precision from all epochs
+            soft_best_val (float): best validation soft precision
+            soft_val_all_epochs (list): list of soft validation precision from all  epochs
+            hard_best_background (float): best hard precision for 'background' class
+            hard_best_crack (float): best hard precision for 'crack' class
+            hard_best_spallation (float): best hard precision for 'spallation' class
+            hard_best_exposed_bars (float): best hard precision for 'exposed bars' class
+            hard_best_efflorescence (float): best hard precision for 'efflorescence' class
+            hard_best_corrosion_stain (float): best hard precision for 'corrosion stain' class
+            verbose (bool): True for printing search net performance measures to stdout
         """
         self.fixed_net_buffer = self.fixed_net_buffer.append(pd.DataFrame([[self.state_string,
                                                                             spp_size,
@@ -509,8 +522,12 @@ class QLearner:
     def accuracies_to_reward(self, val_acc_list):
         """
         metric to compute reward from a net's validation accuracy list
-        :param val_acc_list: validation accuracy list of a net
-        :return: reward
+        
+        Parameters:
+            val_acc_list (list): validation accuracy list of a net
+        
+        Returns:
+            reward, a floating point value
         """
         # average of last 5 validation accuracies
         reward = np.mean(val_acc_list[-5:]) / 100.
@@ -519,8 +536,12 @@ class QLearner:
     def _transition_to_action(self, to_state):
         """
         simple use case to convert transition to action
-        :param to_state: state for the current state to transition into
-        :return action: action corresponding to the transition
+        
+        Parameters:
+            to_state (lib.MetaQNN.state_enumerator.State): state for the current state to transition into
+        
+        Returns:
+            action (lib.MetaQNN.state_enumerator.State): action corresponding to the transition
         """
         action = to_state.copy()
         return action
@@ -528,8 +549,12 @@ class QLearner:
     def _action_to_state(self, action):
         """
         simple use case to convert action to transition
-        :param action: action from the current state
-        :return to_state: transition (next state) corresponding to the current state
+        
+        Parameters:
+            action (lib.MetaQNN.state_enumerator.State): action from the current state
+        
+        Returns:
+            to_state (ib.MetaQNN.state_enumerator.State): transition (next state) corresponding to the current state
         """
         to_state = action.copy()
         return to_state
@@ -537,8 +562,10 @@ class QLearner:
     def _update_q_value_sequence(self, state_list, reward):
         """
         updates Q-values for a sequence of state action pairs
-        :param state_list: list of states in a state sequence
-        :param reward: reward to be used in the Bellman equation update
+        
+        Parameters:
+            state_list (list): list of states in a state sequence
+            reward (floating): reward to be used in the Bellman equation update
         """
         # updates the Q-value for the last state pair (update taking place in the reverse order)
         self._update_q_value(state_list[-2], state_list[-1], reward)
@@ -551,9 +578,11 @@ class QLearner:
     def _update_q_value(self, start_state, to_state, reward):
         """
         updates Q-value for single state action pair
-        :param start_state: start state in the state action pair
-        :param to_state: end state in the state action pair
-        :param reward: reward to be used in the Q-learning Bellman iterative update
+        
+        Parameters:
+            start_state (lib.MetaQNN.state_enumerator.State): start state in the state action pair
+            to_state (lib.MetaQNN.state_enumerator.State): end state in the state action pair
+            reward (float): reward to be used in the Q-learning Bellman iterative update
         """
         # populate transitions if either start state/ end state not encountered previously (useful to continue search)
         if start_state.as_tuple() not in self.q_values_obj.q_values:

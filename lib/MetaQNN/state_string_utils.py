@@ -19,9 +19,13 @@ class StateStringUtils:
     def state_list_to_string(self, state_list, num_classes):
         """
         parses state list to string
-        :param state_list: state list for parsing
-        :param num_classes: number of classes in the dataset
-        :return string describing states from the state list
+        
+        Parameters:
+            state_list (list): state list for parsing
+            num_classes (int): number of classes in the dataset
+        
+        Returns:
+            string describing states from the state list
         """
 
         strings = []
@@ -36,9 +40,13 @@ class StateStringUtils:
     def parsed_list_to_state_list(self, parsed_list, patch_size):
         """
         converts a list output by cnn.py after parsing a string, to a state list
-        :param parsed_list: list output by cnn.py upon parsing a string
-        :param patch_size: patch size of image input to the network
-        :return states: list of states
+        
+        Parameters:
+            parsed_list (list): list output by cnn.py upon parsing a string
+            patch_size (int): patch size of image input to the network
+        
+        Returns:
+            list of states
         """
 
         states = [se.State('start', 0, 0, 0, 0, patch_size, 0, 0)]
@@ -95,9 +103,13 @@ class StateStringUtils:
     def _state_to_string(self, state, num_classes):
         """
         parses an individual state to string
-        :param state: state for parsing
-        :param num_classes: number of classes in the dataset
-        :return string for an individual state
+        
+        Parameters:
+            state (lib.MetaQNN.state_enumerator.State): state for parsing
+            num_classes (int): number of classes in the dataset
+        
+        Returns:
+            string for an individual state
         """
         if state.terminate == 1:
             return 'SM(%i)' % num_classes
@@ -116,9 +128,13 @@ class StateStringUtils:
     def _calc_new_image_size(self, image_size, filter_size):
         """
         return new image size
-        :param image_size: current image size
-        :param filter_size: conv square kernel size
-        :return new_size: new image size after applying this conv filter
+        
+        Parameters:
+            image_size (int): current image size
+            filter_size (int): conv square kernel size
+        
+        Returns:
+            new image size after applying this conv filter
         """
         if filter_size <= 5:
             new_size = int(math.floor((image_size - filter_size) / 1 + 1))

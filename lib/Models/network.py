@@ -15,9 +15,13 @@ import lib.Models.state_space_parameters as state_space_parameters
 def spatial_pyramid_pooling(inp, level):
     """
     spatial pyramid pooling (spp) layer
-    :param inp: 4 channel input (bt,ch,r,c)
-    :param level: no of levels of pooling
-    :return: output from the spp layer
+    
+    Parameters:
+        inp (tuple): 4 channel input (bt,ch,r,c)
+        level (int): no of levels of pooling
+    
+    Returns:
+        output (torch.Tensor) from the spp layer
     """
 
     if inp.size(2) != inp.size(3):
@@ -73,8 +77,12 @@ class WRNBasicBlock(nn.Module):
     def forward(self, x):
         """
         overloaded forward method to carry out the forward pass with the network
-        :param x: input to the wrn block
-        :return output of the wrn block
+        
+        Parameters:
+            x (torch.Tensor): input to the wrn block
+        
+        Returns:
+            output (torch.Tensor) of the wrn block
         """
 
         if not self.equalInOut:
@@ -241,8 +249,12 @@ class Net(nn.Module):
     def forward(self, x):
         """
         overloaded forward method to carry out the forward pass with the network
-        :param x: input to the network
-        :return output of the network
+        
+        Parameters:
+            x (torch.Tensor): input to the network
+        
+        Returns:
+            output (torch.Tensor) of the network
         """
         x = spatial_pyramid_pooling(self.feature_extractor(x), self.spp_size)
         x = torch.sigmoid(self.classifier(x))

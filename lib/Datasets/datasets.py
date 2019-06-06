@@ -46,8 +46,12 @@ class CODEBRIMSplit(datasets.ImageFolder):
     def __getitem__(self, idx):
         """
         defines the iterator for the dataset and returns datapoints in the form of tuples
-        :param idx: index to return the datapoint from
-        :return: a datapoint tuple (sample, target) for the index
+
+        Parameters:
+            idx (int): index to return the datapoint from
+
+        Returns:
+            a datapoint tuple (sample, target) for the index
         """
         image_batch = super(CODEBRIMSplit, self).__getitem__(idx)[0]
         image_name = self.imgs[idx][0]
@@ -64,8 +68,12 @@ class CODEBRIMSplit(datasets.ImageFolder):
     def compute_target_multi_target(self, defect):
         """
         enumerates the class-label by defining a float32 numpy array
-        :param defect: the class labels in the form of a string
-        :return: the enumerated version of the labels in the form of a numpy array 
+
+        Parameters:
+            defect (string): the class labels in the form of a string
+
+        Returns:
+            the enumerated version of the labels in the form of a numpy array 
         """
         out = np.zeros(self.num_classes, dtype=np.float32)
         for i in range(self.num_classes):
@@ -105,8 +113,12 @@ class CODEBRIM:
     def get_dataset(self, patch_size):
         """
         return dataset splits
-        :param patch_size: patch-size to rescale the images to
-        :return: train_set (train split), val_set (validation split), test_set (test split)
+
+        Parameters:
+            patch_size (int): patch-size to rescale the images to
+        
+        Returns:
+            train_set (train split), val_set (validation split), test_set (test split)
         """
         train_set = CODEBRIMSplit(os.path.join(self.dataset_path, 'train'),
                                   self.dataset_xml_list,
@@ -129,10 +141,14 @@ class CODEBRIM:
     def get_dataset_loader(self, batch_size, workers, is_gpu):
         """
         defines the dataset loader for wrapped dataset
-        :param batch_size: mini batch size in data loader
-        :param workers: number of parallel cpu threads for data loading
-        :param is_gpu: True if CUDA is enabled so pin_memory is set to True
-        :return: train_loader (train loader), val_loader (validation loader), test_loader (test loader)
+
+        Parameters:
+            batch_size (int): mini batch size in data loader
+            workers (int): number of parallel cpu threads for data loading
+            is_gpu (bool): True if CUDA is enabled so pin_memory is set to True
+        
+        Returns:
+            train_loader (train loader), val_loader (validation loader), test_loader (test loader)
         """
         train_loader = torch.utils.data.DataLoader(self.train_set, num_workers=workers, batch_size=batch_size,
                                                    shuffle=True, pin_memory=is_gpu)

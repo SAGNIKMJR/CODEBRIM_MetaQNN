@@ -12,22 +12,26 @@ def val(val_loader, model, criterion, device, is_val=True):
     """
     validates the model of a net for one epoch on the validation set
 
-    :param val_loader: data loader for the validation set
-    :param model: model of a net that has to be validated
-    :param criterion: loss criterion
-    :param device: device name where data is transferred to
-    :param is_val: validation or testing mode
-    :return losses.avg: average of the validation losses over the batches
-            hard_prec.avg: average of the validation hard precision over the batches for all the defects
-            soft_prec.avg: average of the validation soft precision over the batches for all the defects
-            hard_prec_background.avg: average of the validation hard/soft precision over the batches for background
-            hard_prec_crack.avg: average of the validation hard/soft precision over the batches for crack
-            hard_prec_spallation.avg: average of the validation hard/soft precision over the batches for spallation
-            hard_prec_exposed_bars.avg: average of the validation hard/soft precision over the batches for exposed bars
-            hard_prec_efflorescence.avg: average of the validation hard/soft precision over the batches for
-                                         efflorescence
-            hard_prec_corrosion_stain.avg: average of the validation hard/soft precision over the batches for corrosion
-                                           stain
+    Parameters:
+        val_loader (torch.utils.data.DataLoader): data loader for the validation set
+        model (lib.Models.network.Net): model of a net that has to be validated
+        criterion (torch.nn.BCELoss): loss criterion
+        device (torch.device): device name where data is transferred to
+        is_val (bool): validation or testing mode
+
+    Returns:
+        losses.avg (float): average of the validation losses over the batches
+        hard_prec.avg (float): average of the validation hard precision over the batches for all the defects
+        soft_prec.avg (float): average of the validation soft precision over the batches for all the defects
+        hard_prec_background.avg (float): average of the validation hard/soft precision over the batches for background
+        hard_prec_crack.avg (float): average of the validation hard/soft precision over the batches for crack
+        hard_prec_spallation.avg (float): average of the validation hard/soft precision over the batches for spallation
+        hard_prec_exposed_bars.avg (float): average of the validation hard/soft precision over the batches for exposed
+                                            bars
+        hard_prec_efflorescence.avg (float): average of the validation hard/soft precision over the batches for
+                                             efflorescence
+        hard_prec_corrosion_stain.avg (float): average of the validation hard/soft precision over the batches for
+                                               corrosion stain
     """
     # performance metrics
     losses = AverageMeter()

@@ -22,15 +22,20 @@ from lib.Utility.utils import save_checkpoint
 def train_val_net(state_list, dataset, weight_initializer, device, args, save_path):
     """
     builds a net given a state list, and trains and validates it
-    :param state_list: list of states to build the net
-    :param dataset: dataset to train and validate the net on
-    :param weight_initializer: weight initializer for initializing the weights of the network
-    :param device: type of computational device available (cpu / gpu)
-    :param args: parsed command line arguments
-    :param save_path: path for saving results to
-    :return memfit: True if the network fits the memory after batch splitting, False otherwise
-            val_acc_all_epochs: list of validation accuracies in all epochs
-            train_flag: False if net's been early-stopped, False otherwise
+    
+    Parameters:
+        state_list (list): list of states to build the net
+        dataset (lib.Datasets.datasets.CODEBRIM): dataset to train and validate the net on
+        weight_initializer (lib.Models.initialization.WeightInit): weight initializer for initializing the weights of
+                                                                   the network
+        device (torch.device): type of computational device available (cpu / gpu)
+        args (argparse.ArgumentParser): parsed command line arguments
+        save_path (string): path for saving results to
+    
+    Returns:
+        memfit (bool): True if the network fits the memory after batch splitting, False otherwise
+        val_acc_all_epochs (list): list of validation accuracies in all epochs
+        train_flag (bool): False if net's been early-stopped, False otherwise
     """
     # reset the data loaders
     dataset.train_loader, dataset.val_loader, dataset.test_loader = dataset.get_dataset_loader(args.batch_size,

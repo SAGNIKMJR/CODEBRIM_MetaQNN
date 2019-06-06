@@ -13,15 +13,19 @@ from lib.Utility.metrics import AverageMeter
 def train(train_loader, model, criterion, epoch, optimizer, lr_scheduler, device, args, split_batch_size):
     """
     trains the model of a net for one epoch on the train set
-    :param train_loader: data loader for the train set
-    :param model: model of the net to be trained
-    :param criterion: loss criterion to be optimized
-    :param epoch: continuous epoch counter
-    :param optimizer: optimizer instance like SGD or Adam
-    :param lr_scheduler: class implementing learning rate schedules
-    :param device: computational device (cpu or gpu)
-    :param args: parsed command line arguments
-    :param split_batch_size:  smaller batch size after splitting the original batch size for fitting the device memory
+    
+    Parameters:
+        train_loader (torch.utils.data.DataLoader): data loader for the train set
+        model (lib.Models.network.Net): model of the net to be trained
+        criterion (torch.nn.BCELoss): loss criterion to be optimized
+        epoch (int): continuous epoch counter
+        optimizer (torch.optim.SGD): optimizer instance like SGD or Adam
+        lr_scheduler (lib.Training.learning_rate_scheduling.LearningRateScheduler): class implementing learning rate
+                                                                                    schedules
+        device (torch.device): computational device (cpu or gpu)
+        args (argparse.ArgumentParser): parsed command line arguments
+        split_batch_size (int):  smaller batch size after splitting the original batch size for fitting the device
+                                 memory
     """
     # performance and computational overhead metrics
     batch_time = AverageMeter()

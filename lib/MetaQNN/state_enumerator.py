@@ -14,8 +14,11 @@ class State:
 
     Parameters:
         layer_type (string): type of layer
-            'fc' -> fully connected
         layer_depth (int): position of layer in the network
+        filter_depth (int): number of channels/features in the output of the layer
+        filter_size (int): height/width of the square filter
+        stride (int): stride value for strided convolutional layer
+        image_size (int): height/width of the feature space output by the layer
         fc_size (int): size of layer if fully connected
         terminate (int): 1 if the state is the last state, else 0
         state_list (list): sequence of states can be built from a state list which takes precedence if specified
@@ -51,7 +54,8 @@ class State:
 
     def as_tuple(self):
         """
-        :return tuple containing the state attributes
+        Returns:
+            tuple containing the state attributes
         """
         return (self.layer_type,
                 self.layer_depth,
@@ -64,13 +68,15 @@ class State:
 
     def as_list(self):
         """
-        :return list containing the state attributes
+        Returns:
+            list containing the state attributes
         """
         return list(self.as_tuple())
 
     def copy(self):
         """
-        :return copy of the state
+        Returns:
+            copy of the state
         """
         return State(self.layer_type,
                      self.layer_depth,
@@ -100,9 +106,10 @@ class StateEnumerator:
     def enumerate_state(self, state, q_values):
         """
         defines all state transitions, populates q_values where actions are valid
-        :param state: current state
-        :param q_values: partially populated Q-value dictionary
-        :return q_values: populated Q-value table with added entries of state action pairs
+        
+        Parameters:
+            state (lib.MetaQNN.state_enumerator.State): current state
+            q_values (): partially populated Q-value dictionary
         """
 
         actions = []
@@ -207,8 +214,12 @@ class StateEnumerator:
     def _fc_sizes(self, state=None):
         """
         return possible fc sizes given a state
-        :param state: current state
-        :return fc_sizes: all possible fc sizes for the next state
+        
+        Parameters:
+            state (lib.MetaQNN.state_enumerator.State): current state
+        
+        Returns:
+            a list of all possible fc sizes for the next state
         """
         # for fc layer, next fc layers have smaller fc_size
         if not isinstance(state, type(None)) and state.layer_type == 'fc':
@@ -221,8 +232,12 @@ class StateEnumerator:
     def _conv_sizes(self, image_size):
         """
         return possible conv sizes given a state
-        :param image_size: current image size
-        :return conv_sizes: all possible conv square kernel sizes for the given image size
+        
+        Parameters:
+            image_size (int): current image size
+        
+        Returns:
+            a list of all possible conv square kernel sizes for the given image size
         """
         conv_sizes = [conv_size for conv_size in state_space_parameters.conv_sizes if conv_size < image_size]
 
@@ -231,9 +246,13 @@ class StateEnumerator:
     def _calc_new_image_size(self, image_size, filter_size):
         """
         return new image size
-        :param image_size: current image size
-        :param filter_size: conv square kernel size
-        :return new_size: new image size after applying this conv filter
+
+        Parameters:
+            image_size (int): current image size
+            filter_size (int): conv square kernel size
+
+        Returns:
+            new image size (int) after applying this conv filter
         """
         if filter_size <= 5:
             new_size = int(math.floor((image_size - filter_size) / 1 + 1))
