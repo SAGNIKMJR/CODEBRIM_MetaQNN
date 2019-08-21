@@ -22,4 +22,4 @@ To retrain and revaluate an architecture from a previous search, one may execute
 
  `python3 main.py -t 2 --dataset-path PATH_TO_CODEBRIM_DATASET --replay-buffer-csv-path PATH_TO_LAST_REPLAY_BUFFER --fixed-net-index-no INDEX_NO_OF_ARC`
  
- Here, the additional parameter, *INDEX_NO_OF_ARC* denotes the index of the architecture configuration which needs to be retrained, as per the indexing in the replay buffer.
+ Here, the additional parameter *INDEX_NO_OF_ARC* denotes the index of the architecture configuration which needs to be retrained, as per the indexing in the replay buffer.
