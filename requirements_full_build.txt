@@ -52,7 +52,7 @@ libmr==0.1.9
 librosa==0.6.3
 llvmlite==0.28.0
 louis==2.6.4
-lxml==3.5.0
+lxml==4.6.2
 Mako==1.0.3
 Markdown==3.0.1
 MarkupSafe==1.1.1
